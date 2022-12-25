@@ -18,10 +18,10 @@ using std::vector;
 
 const int NUMBER_OF_SORT_CALLS = 1000;
 
-int main() {
+int GenerateFile() {
   auto comp = [](int lhs, int rhs) { return rhs < lhs; };
   std::ofstream fout("times.csv");
-  fout << "n,qsort,insertion_sort,sort" << endl;
+  fout << "n,qsort,insertion_sort" << endl;
   for (int elements = 1; elements <= 100; elements++) {
     vector<int> data;
     for (int i = 0; i < elements; i++) {
@@ -31,11 +31,10 @@ int main() {
       swap(data[i], data[rand() % elements]);
     }
 
-    vector<vector<int>> quick_sort_data, insertion_sort_data, sort_data;
+    vector<vector<int>> quick_sort_data, insertion_sort_data;
     for (int i = 0; i < NUMBER_OF_SORT_CALLS; i++) {
       quick_sort_data.push_back(data);
       insertion_sort_data.push_back(data);
-      sort_data.push_back(data);
     }
 
     // insertion
@@ -54,14 +53,6 @@ int main() {
     }
     end = clock();
     int quick_time = end - start;
-
-    // sort
-    start = clock();
-    for (int i = 0; i < NUMBER_OF_SORT_CALLS; i++) {
-      Sort(quick_sort_data[i].begin(), quick_sort_data[i].end(), comp);
-    }
-    end = clock();
-    int sort_time = end - start;
 
     for (int i = 0; i < elements; i++) {
       if (quick_sort_data[0][i] != insertion_sort_data[0][i]) {
@@ -84,8 +75,9 @@ int main() {
       }
     }
 
-    fout << elements << "," << quick_time << "," << insertion_time << ","
-         << sort_time << endl;
+    fout << elements << "," << quick_time << "," << insertion_time << endl;
   }
   fout.close();
 }
+
+int main() { GenerateFile(); }

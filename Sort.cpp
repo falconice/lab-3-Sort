@@ -61,9 +61,13 @@ inline void InsertionSort(T begin, T end, Comparator comparator) {
     if (!comparator(begin[current], begin[move_start])) {
       move_start++;
     }
+
+    auto tmp = std::move(begin[current]);
     for (int moving = current; move_start < moving; moving--) {
-      swap(begin[moving - 1], begin[moving]);
+      begin[moving] = std::move(begin[moving - 1]);
+      // swap(begin[moving - 1], begin[moving]);
     }
+    begin[move_start] = std::move(tmp);
   }
 }
 
@@ -71,7 +75,7 @@ template <typename T, typename Comparator>
 void Sort(T begin, T end, Comparator comparator) {
   size_t size;
   while ((size = end - begin) > 1) {
-    // magin number is 11
+    // magic number is 11
     if (size < 12) {
       InsertionSort(begin, end, comparator);
       return;
