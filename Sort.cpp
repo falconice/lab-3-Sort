@@ -4,7 +4,6 @@
 using std::function;
 using std::swap;
 
-// Алгоритм быстрой сортировки для итератора случайонго доступа
 template <typename T, typename Comparator>
 T ChoosePivot(T first, T second, T last, Comparator comparator) {
   if (comparator(second, first) && comparator(last, second)) {
