@@ -65,7 +65,6 @@ inline void InsertionSort(T begin, T end, Comparator comparator) {
     auto tmp = std::move(begin[current]);
     for (int moving = current; move_start < moving; moving--) {
       begin[moving] = std::move(begin[moving - 1]);
-      // swap(begin[moving - 1], begin[moving]);
     }
     begin[move_start] = std::move(tmp);
   }
